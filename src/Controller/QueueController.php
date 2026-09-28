@@ -62,7 +62,7 @@ class QueueController
      */
     public function showForm(): void
     {
-        $pid = (int) ($_GET['pid'] ?? $_SESSION['pid'] ?? 0);
+        $pid = (int) ($_GET['pid'] ?? \OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()->get('pid') ?? 0);
         if ($pid <= 0) {
             $this->sendError('No patient selected.');
             return;
@@ -84,8 +84,8 @@ class QueueController
                 'order' => $order,
                 'labProviders' => $labProviders,
                 'providers' => $providers,
-                'currentProviderId' => $_SESSION['authUserID'] ?? 0,
-                'csrfToken' => CsrfUtils::collectCsrfToken(),
+                'currentProviderId' => \OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()->get('authUserID') ?? 0,
+                'csrfToken' => CsrfUtils::collectCsrfToken(\OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()),
                 'webroot' => $GLOBALS['webroot'],
                 'modulePublicPath' => $this->getModulePublicUrl(),
             ]
@@ -163,7 +163,7 @@ class QueueController
      */
     public function listQueue(): void
     {
-        $pid = (int) ($_GET['pid'] ?? $_SESSION['pid'] ?? 0);
+        $pid = (int) ($_GET['pid'] ?? \OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()->get('pid') ?? 0);
         if ($pid <= 0) {
             $this->sendError('No patient selected.');
             return;
@@ -178,7 +178,7 @@ class QueueController
                 'pid' => $pid,
                 'orders' => $orders,
                 'encounters' => $encounters,
-                'csrfToken' => CsrfUtils::collectCsrfToken(),
+                'csrfToken' => CsrfUtils::collectCsrfToken(\OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()),
                 'webroot' => $GLOBALS['webroot'],
                 'modulePublicPath' => $this->getModulePublicUrl(),
             ]
@@ -199,7 +199,7 @@ class QueueController
                 'orders' => $orders,
                 'encounters' => [],
                 'globalView' => true,
-                'csrfToken' => CsrfUtils::collectCsrfToken(),
+                'csrfToken' => CsrfUtils::collectCsrfToken(\OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()),
                 'webroot' => $GLOBALS['webroot'],
                 'modulePublicPath' => $this->getModulePublicUrl(),
             ]
@@ -235,8 +235,8 @@ class QueueController
                 'readOnly' => true,
                 'labProviders' => $this->service->getActiveLabProviders(),
                 'providers' => $this->service->getOrderingProviders(),
-                'currentProviderId' => $_SESSION['authUserID'] ?? 0,
-                'csrfToken' => CsrfUtils::collectCsrfToken(),
+                'currentProviderId' => \OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()->get('authUserID') ?? 0,
+                'csrfToken' => CsrfUtils::collectCsrfToken(\OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()),
                 'webroot' => $GLOBALS['webroot'],
                 'modulePublicPath' => $this->getModulePublicUrl(),
             ]
@@ -374,7 +374,7 @@ class QueueController
                 'orders' => [],
                 'encounters' => [],
                 'errorMessage' => $message,
-                'csrfToken' => CsrfUtils::collectCsrfToken(),
+                'csrfToken' => CsrfUtils::collectCsrfToken(\OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()),
                 'webroot' => $GLOBALS['webroot'] ?? '',
                 'modulePublicPath' => $this->getModulePublicUrl(),
             ]

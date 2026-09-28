@@ -313,8 +313,8 @@ class LabOrderQueueRepository
                         $formLabel,
                         $procedureOrderId,
                         $pid,
-                        $_SESSION['authUser'] ?? '',
-                        $_SESSION['authProvider'] ?? '',
+                        \OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()->get('authUser') ?? '',
+                        \OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()->get('authProvider') ?? '',
                         $authorized,
                     ]
                 );

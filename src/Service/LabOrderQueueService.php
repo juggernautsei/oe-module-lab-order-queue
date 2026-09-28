@@ -160,7 +160,7 @@ class LabOrderQueueService
             );
         }
 
-        $authorized = $_SESSION['userauthorized'] ?? '0';
+        $authorized = \OpenEMR\Common\Session\SessionWrapperFactory::getInstance()->getActiveSession()->get('userauthorized') ?? '0';
 
         return $this->repository->attachToEncounter(
             $queueId,
